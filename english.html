@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Словарь на английском</title>
+  <style>
+      body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; }
+      header { background: #007BFF; color: white; padding: 20px; text-align: center; }
+      section { padding: 20px; margin: 10px; border-radius: 5px; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+      footer { text-align: center; padding: 20px; background: #f1f1f1; }
+      form { display: flex; flex-direction: column; max-width: 400px; margin: auto; }
+      input, button { margin: 10px 0; padding: 10px; }
+      .error { color: red; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Словарь на английском</h1>
+  <img src="https://example.com/english_image.jpg" alt="English Language" style="max-width: 100%; height: auto;">
+  <blockquote>“To be yourself in a world that is constantly trying to make you something else is the greatest accomplishment.” – Ralph Waldo Emerson</blockquote>
+</header>
+
+<section>
+  <h2>Добавьте новое слово</h2>
+  <form id="englishForm">
+      <input type="text" id="englishWord" placeholder="Введите слово на английском" required>
+      <input type="text" id="russianTranslation" placeholder="Введите перевод на русский" required>
+      <button type="submit">Добавить слово</button>
+      <div class="error" id="englishError"></div>
+  </form>
+  <h3>Добавленные слова:</h3>
+  <ul id="englishWordList"></ul>
+</section>
+
+<section>
+  <h2>Тест на словарь</h2>
+  <form id="testForm">
+      <label for="testWord">Какой перевод слова "Hello"?</label>
+      <input type="text" id="testAnswer" placeholder="Ваш ответ" required>
+      <button type="submit">Проверить ответ</button>
+      <div class="testResult" id="testResult"></div>
+  </form>
+</section>
+
+<footer>
+  <p>&copy; 2025 Сайт словаря Баямана. Все права защищены.</p>
+</footer>
+
+<script>
+  // Функция для проверки ввода английского слова
+  function validateEnglishWord(word) {
+      const englishRegex = /^[A-Za-z]+$/;
+      return englishRegex.test(word);
+  }
+
+  // Английский словарь
+  document.getElementById('englishForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const englishWord = document.getElementById('englishWord').value;
+      const russianTranslation = document.getElementById('russianTranslation').value;
+      const englishWordList = document.getElementById('englishWordList');
+      const englishError = document.getElementById('englishError');
+
+      // Валидация
+      if (!validateEnglishWord(englishWord)) {
+          englishError.textContent = 'Пожалуйста, введите только английские буквы.';
+          return;
+      } else {
+          englishError.textContent = '';
+      }
+
+      const li = document.createElement('li');
+      li.textContent = `${englishWord} - ${russianTranslation}`;
+      englishWordList.appendChild(li);
+      document.getElementById('englishWord').value = '';
+      document.getElementById('russianTranslation').value = '';
+  });
+
+  // Тест на словарь
+  document.getElementById('testForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const answer = document.getElementById('testAnswer').value.trim().toLowerCase();
+      const correctAnswer = "привет"; // Правильный перевод слова "Hello"
+      const testResult = document.getElementById('testResult');
+
+      if (answer === correctAnswer) {
+          testResult.textContent = "Правильно! Молодец!";
+          testResult.style.color = "green";
+      } else {
+          testResult.textContent = "Неправильно. Попробуйте еще раз.";
+          testResult.style.color = "red";
+      }
+      document.getElementById('testAnswer').value = '';
+  });
+</script>
+
+</body>
+</html>
