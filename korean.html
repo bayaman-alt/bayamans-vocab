@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Словарь на корейском</title>
+  <style>
+      body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; }
+      header { background: #007BFF; color: white; padding: 20px; text-align: center; }
+      section { padding: 20px; margin: 10px; border-radius: 5px; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+      footer { text-align: center; padding: 20px; background: #f1f1f1; }
+      form { display: flex; flex-direction: column; max-width: 400px; margin: auto; }
+      input, button { margin: 10px 0; padding: 10px; }
+      .error { color: red; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Словарь на корейском</h1>
+  <img src="https://example.com/korean_image.jpg" alt="Korean Language" style="max-width: 100%; height: auto;">
+  <blockquote>“인생은 길고, 배움은 끝이 없다.” (Life is long, and learning never ends.)</blockquote>
+</header>
+
+<section>
+  <h2>Добавьте новое слово</h2>
+  <form id="koreanForm">
+      <input type="text" id="koreanWord" placeholder="Введите слово на корейском" required>
+      <input type="text" id="russianTranslationKorean" placeholder="Введите перевод на русский" required>
+      <button type="submit">Добавить слово</button>
+      <div class="error" id="koreanError"></div>
+  </form>
+  <h3>Добавленные слова:</h3>
+  <ul id="koreanWordList"></ul>
+</section>
+
+<section>
+  <h2>Тест на словарь</h2>
+  <form id="testFormKorean">
+      <label for="testWordKorean">Какой перевод слова "안녕하세요"?</label>
+      <input type="text" id="testAnswerKorean" placeholder="Ваш ответ" required>
+      <button type="submit">Проверить ответ</button>
+      <div class="testResult" id="testResultKorean"></div>
+  </form>
+</section>
+
+<footer>
+  <p>&copy; 2025 Сайт словаря Баямана. Все права защищены.</p>
+</footer>
+
+<script>
+  // Функция для проверки ввода корейского слова
+  function validateKoreanWord(word) {
+      const koreanRegex = /^[가-힣]+$/;
+      return koreanRegex.test(word);
+  }
+
+  // Корейский словарь
+  document.getElementById('koreanForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const koreanWord = document.getElementById('koreanWord').value;
+      const russianTranslationKorean = document.getElementById('russianTranslationKorean').value;
+      const koreanWordList = document.getElementById('koreanWordList');
+      const koreanError = document.getElementById('koreanError');
+
+      // Валидация
+      if (!validateKoreanWord(koreanWord)) {
+          koreanError.textContent = 'Пожалуйста, введите только корейские буквы.';
+          return;
+      } else {
+          koreanError.textContent = '';
+      }
+
+      const li = document.createElement('li');
+      li.textContent = `${koreanWord} - ${russianTranslationKorean}`;
+      koreanWordList.appendChild(li);
+      document.getElementById('koreanWord').value = '';
+      document.getElementById('russianTranslationKorean').value = '';
+  });
+
+  // Тест на словарь
+  document.getElementById('testFormKorean').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const answer = document.getElementById('testAnswerKorean').value.trim().toLowerCase();
+      const correctAnswer = "привет"; // Правильный перевод слова "안녕하세요"
+      const testResult = document.getElementById('testResultKorean');
+
+      if (answer === correctAnswer) {
+          testResult.textContent = "Правильно! Молодец!";
+          testResult.style.color = "green";
+      } else {
+          testResult.textContent = "Неправильно. Попробуйте еще раз.";
+          testResult.style.color = "red";
+      }
+      document.getElementById('testAnswerKorean').value = '';
+  });
+</script>
+
+</body>
+</html>
